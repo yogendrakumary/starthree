@@ -19,7 +19,7 @@ public class ProductDAOImpl implements ProductDAO {
 		try {
 			pst = con.prepareStatement(sql);
 			rs = pst.executeQuery();
-		
+
 			while (rs.next()) {
 				Product p = new Product(rs.getInt("id"), rs.getString("name"), rs.getDouble("price"));
 				products.add(p);
@@ -37,19 +37,19 @@ public class ProductDAOImpl implements ProductDAO {
 	}
 
 	@Override
-	public Product findById(int  id) {
+	public Product findById(int id) {
 		Connection con = JDBCUtil.getConnection();
 		String sql = "select * from products where id = ?";
 		ResultSet rs;
 		PreparedStatement pst;
-		Product p= null;
+		Product p = null;
 		try {
 			pst = con.prepareStatement(sql);
 			pst.setInt(1, id);
 			rs = pst.executeQuery();
-		
+
 			if (rs.next()) {
-				 p = new Product(rs.getInt("id"), rs.getString("name"), rs.getDouble("price"));
+				p = new Product(rs.getInt("id"), rs.getString("name"), rs.getDouble("price"));
 			}
 
 			rs.close();
@@ -64,8 +64,30 @@ public class ProductDAOImpl implements ProductDAO {
 
 	@Override
 	public Product save(Product p) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection con = JDBCUtil.getConnection();
+		String sql = "insert into products(id,name,price) values(?,?,?)";
+		PreparedStatement pst;
+		int n = 0;
+		
+		try {
+			pst = con.prepareStatement(sql);
+			pst.setInt(1, p.getId());
+			pst.setString(2, p.getName());
+			pst.setDouble(3, p.getPrice());
+			n = pst.executeUpdate();
+			pst.close();
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if (n == 1)
+		{
+			return p;
+		}
+		else
+			return null;
 	}
 
 }
