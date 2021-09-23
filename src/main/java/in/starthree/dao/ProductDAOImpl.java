@@ -51,6 +51,8 @@ public class ProductDAOImpl implements ProductDAO {
 			if (rs.next()) {
 				p = new Product(rs.getInt("id"), rs.getString("name"), rs.getDouble("price"));
 			}
+			else
+				throw new ProductNotFoundException();
 
 			rs.close();
 			con.close();

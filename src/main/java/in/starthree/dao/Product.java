@@ -39,4 +39,18 @@ public class Product {
 	public String toString() {
 		return getId() + " : " + getName() + " : " + getPrice();
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		Product p = (Product) obj;
+		if (p.getId() == getId())
+			return true;
+		else
+			return false;
+
+	}
+	@Override
+	public int hashCode() {
+		return getId();
+	}
 }
