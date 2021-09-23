@@ -2,8 +2,7 @@ package in.starthree.dao;
 
 import java.util.List;
 public class PricingService  implements IPricingService{
-	public PricingService() {
-	}
+
 	private ProductDAO productDAO;
 
 	public PricingService(ProductDAO productDAO) {
